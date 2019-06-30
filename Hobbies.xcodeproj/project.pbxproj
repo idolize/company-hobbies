@@ -7,15 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D507FBFE22C86570008E2223 /* HobbyDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D507FBFD22C86570008E2223 /* HobbyDetail.swift */; };
+		D507FC0022C8678E008E2223 /* HobbiesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D507FBFF22C8678E008E2223 /* HobbiesStore.swift */; };
 		D58E152322C8495500692981 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58E152222C8495500692981 /* AppDelegate.swift */; };
 		D58E152522C8495500692981 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58E152422C8495500692981 /* SceneDelegate.swift */; };
 		D58E152722C8495500692981 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58E152622C8495500692981 /* ContentView.swift */; };
 		D58E152922C8495900692981 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D58E152822C8495900692981 /* Assets.xcassets */; };
 		D58E152C22C8495900692981 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D58E152B22C8495900692981 /* Preview Assets.xcassets */; };
 		D58E152F22C8495900692981 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D58E152D22C8495900692981 /* LaunchScreen.storyboard */; };
+		D58E153722C84FB000692981 /* Hobby.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58E153622C84FB000692981 /* Hobby.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D507FBFD22C86570008E2223 /* HobbyDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbyDetail.swift; sourceTree = "<group>"; };
+		D507FBFF22C8678E008E2223 /* HobbiesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbiesStore.swift; sourceTree = "<group>"; };
 		D58E151F22C8495500692981 /* Hobbies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hobbies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58E152222C8495500692981 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D58E152422C8495500692981 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +29,7 @@
 		D58E152B22C8495900692981 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D58E152E22C8495900692981 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D58E153022C8495900692981 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D58E153622C84FB000692981 /* Hobby.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hobby.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,13 +62,16 @@
 		D58E152122C8495500692981 /* Hobbies */ = {
 			isa = PBXGroup;
 			children = (
+				D58E153022C8495900692981 /* Info.plist */,
+				D58E152D22C8495900692981 /* LaunchScreen.storyboard */,
 				D58E152222C8495500692981 /* AppDelegate.swift */,
 				D58E152422C8495500692981 /* SceneDelegate.swift */,
-				D58E152622C8495500692981 /* ContentView.swift */,
 				D58E152822C8495900692981 /* Assets.xcassets */,
-				D58E152D22C8495900692981 /* LaunchScreen.storyboard */,
-				D58E153022C8495900692981 /* Info.plist */,
+				D58E152622C8495500692981 /* ContentView.swift */,
+				D507FBFD22C86570008E2223 /* HobbyDetail.swift */,
 				D58E152A22C8495900692981 /* Preview Content */,
+				D58E153622C84FB000692981 /* Hobby.swift */,
+				D507FBFF22C8678E008E2223 /* HobbiesStore.swift */,
 			);
 			path = Hobbies;
 			sourceTree = "<group>";
@@ -148,6 +157,9 @@
 			files = (
 				D58E152322C8495500692981 /* AppDelegate.swift in Sources */,
 				D58E152522C8495500692981 /* SceneDelegate.swift in Sources */,
+				D58E153722C84FB000692981 /* Hobby.swift in Sources */,
+				D507FBFE22C86570008E2223 /* HobbyDetail.swift in Sources */,
+				D507FC0022C8678E008E2223 /* HobbiesStore.swift in Sources */,
 				D58E152722C8495500692981 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

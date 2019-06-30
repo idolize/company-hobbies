@@ -9,15 +9,40 @@
 import SwiftUI
 
 struct ContentView : View {
+    @ObjectBinding var store = HobbiesStore()
+    
     var body: some View {
-        Text("Hello World")
+        NavigationView {
+            List(store.hobbies) { hobby in
+                HobbyCell(hobby: hobby)
+            }
+            .navigationBarTitle(Text("Hobbies"))
+        }
+    }
+}
+
+struct HobbyCell : View {
+    var hobby: Hobby
+    
+    var body: some View {
+        NavigationButton(destination: HobbyDetail(hobby: hobby)) {
+            Image(hobby.imageThumb)
+                .cornerRadius(10)
+            
+            VStack(alignment: .leading) {
+                Text(hobby.name)
+                Text("20 People")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
+        }
     }
 }
 
 #if DEBUG
 struct ContentView_Previews : PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(store: HobbiesStore(hobbies: testData))
     }
 }
 #endif
