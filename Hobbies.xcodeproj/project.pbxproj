@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D667B7DE07F3302AA54D102 /* libPods-Hobbies.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ACE14D22BDCAE495BA1A21D /* libPods-Hobbies.a */; };
 		D507FBFE22C86570008E2223 /* HobbyDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D507FBFD22C86570008E2223 /* HobbyDetail.swift */; };
 		D507FC0022C8678E008E2223 /* HobbiesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D507FBFF22C8678E008E2223 /* HobbiesStore.swift */; };
 		D507FC0222C9601A008E2223 /* HobbyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D507FC0122C9601A008E2223 /* HobbyList.swift */; };
 		D507FC0422C96176008E2223 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D507FC0322C96176008E2223 /* Profile.swift */; };
+		D507FC0622C9AD13008E2223 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D507FC0522C9AD13008E2223 /* UserData.swift */; };
+		D514ED3722C9DCD300F9F323 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D514ED3622C9DCD300F9F323 /* GoogleService-Info.plist */; };
+		D58D36B022C9CB5000D58094 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58D36AF22C9CB5000D58094 /* Onboarding.swift */; };
 		D58E152322C8495500692981 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58E152222C8495500692981 /* AppDelegate.swift */; };
 		D58E152522C8495500692981 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58E152422C8495500692981 /* SceneDelegate.swift */; };
 		D58E152722C8495500692981 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58E152622C8495500692981 /* ContentView.swift */; };
@@ -21,10 +25,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0ACE14D22BDCAE495BA1A21D /* libPods-Hobbies.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Hobbies.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EAB62118F7CD7AE8A6D36E4 /* Pods-Hobbies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hobbies.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Hobbies/Pods-Hobbies.debug.xcconfig"; sourceTree = "<group>"; };
+		8C2D698CCD2C97B248CA2708 /* Pods-Hobbies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hobbies.release.xcconfig"; path = "Pods/Target Support Files/Pods-Hobbies/Pods-Hobbies.release.xcconfig"; sourceTree = "<group>"; };
 		D507FBFD22C86570008E2223 /* HobbyDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbyDetail.swift; sourceTree = "<group>"; };
 		D507FBFF22C8678E008E2223 /* HobbiesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbiesStore.swift; sourceTree = "<group>"; };
 		D507FC0122C9601A008E2223 /* HobbyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbyList.swift; sourceTree = "<group>"; };
 		D507FC0322C96176008E2223 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		D507FC0522C9AD13008E2223 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		D514ED3622C9DCD300F9F323 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D58D36AF22C9CB5000D58094 /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		D58E151F22C8495500692981 /* Hobbies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hobbies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58E152222C8495500692981 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D58E152422C8495500692981 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -41,17 +51,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D667B7DE07F3302AA54D102 /* libPods-Hobbies.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		596D12998AF91D86410CEB42 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0ACE14D22BDCAE495BA1A21D /* libPods-Hobbies.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BE4136661B0EA3010F9E9155 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2EAB62118F7CD7AE8A6D36E4 /* Pods-Hobbies.debug.xcconfig */,
+				8C2D698CCD2C97B248CA2708 /* Pods-Hobbies.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		D58E151622C8495500692981 = {
 			isa = PBXGroup;
 			children = (
 				D58E152122C8495500692981 /* Hobbies */,
 				D58E152022C8495500692981 /* Products */,
+				BE4136661B0EA3010F9E9155 /* Pods */,
+				596D12998AF91D86410CEB42 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +96,7 @@
 		D58E152122C8495500692981 /* Hobbies */ = {
 			isa = PBXGroup;
 			children = (
+				D514ED3622C9DCD300F9F323 /* GoogleService-Info.plist */,
 				D58E153022C8495900692981 /* Info.plist */,
 				D58E152D22C8495900692981 /* LaunchScreen.storyboard */,
 				D58E152222C8495500692981 /* AppDelegate.swift */,
@@ -78,6 +109,8 @@
 				D58E152A22C8495900692981 /* Preview Content */,
 				D58E153622C84FB000692981 /* Hobby.swift */,
 				D507FBFF22C8678E008E2223 /* HobbiesStore.swift */,
+				D507FC0522C9AD13008E2223 /* UserData.swift */,
+				D58D36AF22C9CB5000D58094 /* Onboarding.swift */,
 			);
 			path = Hobbies;
 			sourceTree = "<group>";
@@ -97,9 +130,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D58E153322C8495900692981 /* Build configuration list for PBXNativeTarget "Hobbies" */;
 			buildPhases = (
+				C6B67E122039A50D8D63191A /* [CP] Check Pods Manifest.lock */,
 				D58E151B22C8495500692981 /* Sources */,
 				D58E151C22C8495500692981 /* Frameworks */,
 				D58E151D22C8495500692981 /* Resources */,
+				4B9AF79B385CF0EBAFDAC7E8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -149,12 +184,52 @@
 			buildActionMask = 2147483647;
 			files = (
 				D58E152F22C8495900692981 /* LaunchScreen.storyboard in Resources */,
+				D514ED3722C9DCD300F9F323 /* GoogleService-Info.plist in Resources */,
 				D58E152C22C8495900692981 /* Preview Assets.xcassets in Resources */,
 				D58E152922C8495900692981 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4B9AF79B385CF0EBAFDAC7E8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Hobbies/Pods-Hobbies-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC-C++/gRPCCertificates-Cpp.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates-Cpp.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Hobbies/Pods-Hobbies-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C6B67E122039A50D8D63191A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Hobbies-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D58E151B22C8495500692981 /* Sources */ = {
@@ -163,7 +238,9 @@
 			files = (
 				D58E152322C8495500692981 /* AppDelegate.swift in Sources */,
 				D507FC0422C96176008E2223 /* Profile.swift in Sources */,
+				D58D36B022C9CB5000D58094 /* Onboarding.swift in Sources */,
 				D58E152522C8495500692981 /* SceneDelegate.swift in Sources */,
+				D507FC0622C9AD13008E2223 /* UserData.swift in Sources */,
 				D507FC0222C9601A008E2223 /* HobbyList.swift in Sources */,
 				D58E153722C84FB000692981 /* Hobby.swift in Sources */,
 				D507FBFE22C86570008E2223 /* HobbyDetail.swift in Sources */,
@@ -293,6 +370,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -302,6 +380,7 @@
 		};
 		D58E153422C8495900692981 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2EAB62118F7CD7AE8A6D36E4 /* Pods-Hobbies.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -313,15 +392,16 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.daveidol.Hobbies;
+				PRODUCT_BUNDLE_IDENTIFIER = software.idol.Hobbies;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		D58E153522C8495900692981 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C2D698CCD2C97B248CA2708 /* Pods-Hobbies.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -333,10 +413,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.daveidol.Hobbies;
+				PRODUCT_BUNDLE_IDENTIFIER = software.idol.Hobbies;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

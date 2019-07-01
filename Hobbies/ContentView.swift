@@ -9,28 +9,33 @@
 import SwiftUI
 
 struct ContentView : View {
+    @EnvironmentObject var userData: UserData
     @ObjectBinding var store: HobbiesStore
-    @State var activeTab = 0
+    @State var activeTab: Int = 0
     
     var body: some View {
         NavigationView {
-            TabbedView(selection: $activeTab) {
-                HobbyList(store: store)
-                    .tabItemLabel(VStack {
-                        Image("search")
-                        Text("Explore")
-                    })
-                    .tag(0)
+            if userData.user != nil {
+                TabbedView(selection: $activeTab) {
+                    HobbyList(store: store)
+                        .tabItemLabel(VStack {
+                            Image("search")
+                            Text("Explore")
+                        })
+                        .tag(0)
                 
                 
-                Profile()
-                    .tabItemLabel(VStack {
-                        Image("user")
-                        Text("Profile")
-                    })
-                    .tag(1)
+                    Profile()
+                        .tabItemLabel(VStack {
+                            Image("user")
+                            Text("Profile")
+                        })
+                        .tag(1)
+                }
+                .navigationBarTitle(Text(activeTab == 0 ? "Hobbies" : "Profile"))
+            } else {
+                Onboarding()
             }
-            .navigationBarTitle(Text(activeTab == 0 ? "Hobbies" : "Profile"))
         }
     }
 }
