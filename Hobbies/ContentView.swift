@@ -15,7 +15,7 @@ struct ContentView : View {
     
     var body: some View {
         NavigationView {
-            if userData.user != nil {
+            if userData.user != nil && userData.user!.isEmailVerified {
                 TabbedView(selection: $activeTab) {
                     HobbyList(store: store)
                         .tabItemLabel(VStack {
@@ -34,7 +34,7 @@ struct ContentView : View {
                 }
                 .navigationBarTitle(Text(activeTab == 0 ? "Hobbies" : "Profile"))
             } else {
-                Onboarding()
+                Onboarding(createdButNotVerified: userData.user != nil)
             }
         }
     }
