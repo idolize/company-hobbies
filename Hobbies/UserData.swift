@@ -67,6 +67,8 @@ final class UserDataStore {
     init() {
         userDataSubject = CurrentValueSubject(nil)
         authStatusSubject = CurrentValueSubject(UserDataStore.getAuthStatus(user: userDataSubject.value))
+        _ = userDataSubject.print("userDataSubject")
+        _ = authStatusSubject.print("authStatusSubject")
         
         let authStatusFromUserDataPublisher = userDataSubject
             .replaceError(with: nil)
@@ -80,42 +82,60 @@ final class UserDataStore {
         
         let waitingForVerificationPublisher = authStatusSubject.removeDuplicates()
             .filter({ $0 == .waitingForVerification })
+        _ = waitingForVerificationPublisher.print("waitingForVerificationPublisher")
         
         let pollWhileWaitingPublisher = waitingForVerificationPublisher
-            .zip(Timer.publish(every: 7, on: RunLoop.current, in: RunLoop.Mode.default))
+            .zip(Timer.publish(every: 7.0, on: RunLoop.current, in: RunLoop.Mode.default))
+            .map({ _ -> AuthStatus in .waitingForVerification })
+        _ = pollWhileWaitingPublisher.print("pollWhileWaitingPublisher")
         
-        let refreshAndGetCompanyInfoPublisher = waitingForVerificationPublisher
-            .combineLatest(pollWhileWaitingPublisher) { auth, _ in return auth }
+        let refreshVerifiedTokenPublisher = waitingForVerificationPublisher
+            .merge(with: pollWhileWaitingPublisher)
             .flatMap { authStatus in
-                return Publishers.Future<User?, Never> { promise in
+                return Future<User?, Never> { promise in
                     if let user = Auth.auth().currentUser {
                         user.reload() { error in
                             if let user = Auth.auth().currentUser, error == nil && user.isEmailVerified {
                                 promise(.success(user))
+                            } else {
+                                // TODO handle error
+                                promise(.success(nil))
                             }
-                            promise(.success(nil))
                         }
+                    } else {
+                        promise(.success(nil))
                     }
                 }
             }
-            .filter({ $0 != nil })
+            .compactMap({ $0 })
+        _ = refreshVerifiedTokenPublisher.print("refreshVerifiedTokenPublisher")
+        
+        let loggedInPublisher = authStatusSubject.removeDuplicates()
+            .filter({ $0 == .loggedIn })
+        _ = loggedInPublisher.print("loggedInPublisher")
+        
+        let companyUserLoadedPublisher = refreshVerifiedTokenPublisher
+            .merge(with: loggedInPublisher.map({ _ in Auth.auth().currentUser! }))
             .flatMap { user in
-                return Publishers.Future<DocumentSnapshot?, Never> { promise in
-                    user?.getIDTokenForcingRefresh(true) { token, error in
-                        // TODO handle error
-                        // load the companyUser details
-                        if let user = self.userData {
+                return Future<DocumentSnapshot?, Never> { promise in
+                    user.getIDTokenForcingRefresh(true) { token, error in
+                        if let user = self.userData, error == nil {
+                            // load the companyUser details
                             let companyUserRef = Firestore.firestore().collection("companyUsers").document(user.id)
                             companyUserRef.getDocument { doc, error in
                                 // TODO handle error
                                 promise(.success(doc))
                             }
+                        } else {
+                            // TODO handle error
+                            promise(.success(nil))
                         }
                     }
                 }
             }
+        _ = companyUserLoadedPublisher.print("companyUserLoadedPublisher")
         
-        let updateUserWithCompanyPublisher = refreshAndGetCompanyInfoPublisher
+        let updateUserWithCompanyPublisher = companyUserLoadedPublisher
             .compactMap { doc -> UserData? in
                 if let doc = doc, var user = self.userData {
                     user.companyRef = doc.get("company") as! DocumentReference?
@@ -125,8 +145,9 @@ final class UserDataStore {
                 return self.userData
             }
             .map({ u -> UserData? in u })
-        
         _ = updateUserWithCompanyPublisher.subscribe(userDataSubject)
+        
+        
     }
     
     deinit {
