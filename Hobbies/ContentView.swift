@@ -9,13 +9,13 @@
 import SwiftUI
 
 struct ContentView : View {
-    @EnvironmentObject var userData: UserData
+    @EnvironmentObject var userDataStore: UserDataStore
     @ObjectBinding var store: HobbiesStore
     @State var activeTab: Int = 0
     
     var body: some View {
         NavigationView {
-            if userData.user != nil && userData.user!.isEmailVerified {
+            if userDataStore.userData != nil && userDataStore.userData!.isEmailVerified {
                 TabbedView(selection: $activeTab) {
                     HobbyList(store: store)
                         .tabItemLabel(VStack {
@@ -34,7 +34,7 @@ struct ContentView : View {
                 }
                 .navigationBarTitle(Text(activeTab == 0 ? "Hobbies" : "Profile"))
             } else {
-                Onboarding(createdButNotVerified: userData.user != nil)
+                Onboarding(createdButNotVerified: userDataStore.userData != nil)
             }
         }
     }

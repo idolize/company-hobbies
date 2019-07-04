@@ -23,7 +23,7 @@ struct HobbyCell : View {
     var hobby: Hobby
     
     var body: some View {
-        NavigationButton(destination: HobbyDetail(hobby: hobby)) {
+        NavigationLink(destination: HobbyDetail(hobby: hobby)) {
             Image(hobby.imageThumb)
                 .cornerRadius(10)
             

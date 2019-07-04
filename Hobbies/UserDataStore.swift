@@ -38,10 +38,10 @@ struct UserData : Identifiable {
     }
 }
 
-final class UserDataStore {
+final class UserDataStore : BindableObject {
     static let `default` = UserDataStore()
     
-    private static func getAuthStatus(user: UserData?) -> AuthStatus {
+    static func getAuthStatus(user: UserData?) -> AuthStatus {
         guard let user = user else { return .notLoggedIn }
         if !user.isEmailVerified {
             return .waitingForVerification
@@ -62,11 +62,16 @@ final class UserDataStore {
         authStatusSubject.value
     }
     
+    let didChange: AnyPublisher<Void, Never>
+    
     private var authStateHandle: AuthStateDidChangeListenerHandle?
     
     init() {
         userDataSubject = CurrentValueSubject(nil)
         authStatusSubject = CurrentValueSubject(UserDataStore.getAuthStatus(user: userDataSubject.value))
+        didChange = userDataSubject.map({ _ in })
+            .merge(with: authStatusSubject.map({ _ in }))
+            .eraseToAnyPublisher()
         _ = userDataSubject.print("userDataSubject")
         _ = authStatusSubject.print("authStatusSubject")
         
@@ -89,51 +94,52 @@ final class UserDataStore {
             .map({ _ -> AuthStatus in .waitingForVerification })
         _ = pollWhileWaitingPublisher.print("pollWhileWaitingPublisher")
         
-        let refreshVerifiedTokenPublisher = waitingForVerificationPublisher
-            .merge(with: pollWhileWaitingPublisher)
-            .flatMap { authStatus in
-                return Future<User?, Never> { promise in
-                    if let user = Auth.auth().currentUser {
-                        user.reload() { error in
-                            if let user = Auth.auth().currentUser, error == nil && user.isEmailVerified {
-                                promise(.success(user))
-                            } else {
-                                // TODO handle error
-                                promise(.success(nil))
-                            }
-                        }
-                    } else {
-                        promise(.success(nil))
-                    }
-                }
-            }
-            .compactMap({ $0 })
-        _ = refreshVerifiedTokenPublisher.print("refreshVerifiedTokenPublisher")
+//        let refreshVerifiedTokenPublisher = waitingForVerificationPublisher
+//            .merge(with: pollWhileWaitingPublisher)
+//            .flatMap { authStatus in
+//                return Future<User?, Never> { promise in
+//                    if let user = Auth.auth().currentUser {
+//                        user.reload() { error in
+//                            if let user = Auth.auth().currentUser, error == nil && user.isEmailVerified {
+//                                promise(.success(user))
+//                            } else {
+//                                // TODO handle error
+//                                promise(.success(nil))
+//                            }
+//                        }
+//                    } else {
+//                        promise(.success(nil))
+//                    }
+//                }
+//            }
+//            .compactMap({ $0 })
+//        _ = refreshVerifiedTokenPublisher.print("refreshVerifiedTokenPublisher")
         
         let loggedInPublisher = authStatusSubject.removeDuplicates()
             .filter({ $0 == .loggedIn })
         _ = loggedInPublisher.print("loggedInPublisher")
         
-        let companyUserLoadedPublisher = refreshVerifiedTokenPublisher
-            .merge(with: loggedInPublisher.map({ _ in Auth.auth().currentUser! }))
-            .flatMap { user in
-                return Future<DocumentSnapshot?, Never> { promise in
-                    user.getIDTokenForcingRefresh(true) { token, error in
-                        if let user = self.userData, error == nil {
-                            // load the companyUser details
-                            let companyUserRef = Firestore.firestore().collection("companyUsers").document(user.id)
-                            companyUserRef.getDocument { doc, error in
-                                // TODO handle error
-                                promise(.success(doc))
-                            }
-                        } else {
-                            // TODO handle error
-                            promise(.success(nil))
-                        }
-                    }
-                }
-            }
-        _ = companyUserLoadedPublisher.print("companyUserLoadedPublisher")
+        let companyUserLoadedPublisher = PassthroughSubject<DocumentSnapshot?, Never>()
+//        let companyUserLoadedPublisher = refreshVerifiedTokenPublisher
+//            .merge(with: loggedInPublisher.map({ _ in Auth.auth().currentUser! }))
+//            .flatMap { user in
+//                return Future<DocumentSnapshot?, Never> { promise in
+//                    user.getIDTokenForcingRefresh(true) { token, error in
+//                        if let user = self.userData, error == nil {
+//                            // load the companyUser details
+//                            let companyUserRef = Firestore.firestore().collection("companyUsers").document(user.id)
+//                            companyUserRef.getDocument { doc, error in
+//                                // TODO handle error
+//                                promise(.success(doc))
+//                            }
+//                        } else {
+//                            // TODO handle error
+//                            promise(.success(nil))
+//                        }
+//                    }
+//                }
+//            }
+//        _ = companyUserLoadedPublisher.print("companyUserLoadedPublisher")
         
         let updateUserWithCompanyPublisher = companyUserLoadedPublisher
             .compactMap { doc -> UserData? in
@@ -146,8 +152,6 @@ final class UserDataStore {
             }
             .map({ u -> UserData? in u })
         _ = updateUserWithCompanyPublisher.subscribe(userDataSubject)
-        
-        
     }
     
     deinit {

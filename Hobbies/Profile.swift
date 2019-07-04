@@ -10,13 +10,16 @@ import SwiftUI
 import Firebase
 
 struct Profile : View {
-    @EnvironmentObject var userData: UserData
+    @EnvironmentObject var userDataStore: UserDataStore
     
     var body: some View {
         VStack(alignment: HorizontalAlignment.leading) {
-            if userData.user != nil {
-                Text("Email: \(userData.user!.email ?? "missing")")
-                Text("Verified \(userData.user!.isEmailVerified.description)")
+            if userDataStore.userData != nil {
+                Text("Email: \(userDataStore.userData!.email)")
+                Text("Verified: \(userDataStore.userData!.isEmailVerified.description)")
+                Text("Name: \(userDataStore.userData!.name ?? "nil")")
+                Text("Photo URL: \(userDataStore.userData!.photoUrl?.absoluteString ?? "nil")")
+                Text("Company ref: \(userDataStore.userData!.companyRef?.documentID ?? "nil")")
                 Button(action: signOut) {
                     Text("Sign out")
                 }
@@ -40,6 +43,7 @@ struct Profile : View {
 struct Profile_Previews : PreviewProvider {
     static var previews: some View {
         Profile()
+            .environmentObject(UserDataStore.default)
     }
 }
 #endif

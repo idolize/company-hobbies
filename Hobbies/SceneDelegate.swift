@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UIHostingController(rootView:
                 ContentView(store: HobbiesStore(hobbies: testData))
-                    .environmentObject(UserData.default)
+                    .environmentObject(UserDataStore.default)
             )
             self.window = window
             window.makeKeyAndVisible()
