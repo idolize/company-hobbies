@@ -29,15 +29,17 @@ struct UserData : Identifiable {
         self.email = email
     }
     
-    init(from user: User) {
-        self.id = user.uid
-        self.email = user.email ?? ""
-        self.name = user.displayName
-        self.photoUrl = user.photoURL
-        self.isEmailVerified = user.isEmailVerified
+    init(from authUser: User) {
+        self.id = authUser.uid
+        self.email = authUser.email ?? ""
+        self.name = authUser.displayName
+        self.photoUrl = authUser.photoURL
+        self.isEmailVerified = authUser.isEmailVerified
     }
 }
 
+// TODO move all of this to something more sane - like the new Combine framework!!
+// see the "use-combine" branch for a first attempt at such a migration
 final class UserDataStore : BindableObject {
     static let `default` = UserDataStore()
     
@@ -52,111 +54,101 @@ final class UserDataStore : BindableObject {
         return .loggedInToCompany
     }
     
-    let authStatusSubject: CurrentValueSubject<AuthStatus, Never>
-    let userDataSubject: CurrentValueSubject<UserData?, Never>
-    
-    var userData: UserData? {
-        userDataSubject.value
+    var userData: UserData? = nil {
+        didSet {
+            if oldValue == nil && authStatus == .loggedIn {
+                loadCompanyData()
+            }
+            if authStatus == .waitingForVerification {
+                startPollingVerification()
+            } else {
+                stopPollingVerification()
+            }
+            didChange.send()
+        }
     }
     var authStatus: AuthStatus {
-        authStatusSubject.value
+        return UserDataStore.getAuthStatus(user: userData)
     }
     
-    let didChange: AnyPublisher<Void, Never>
+    let didChange = PassthroughSubject<Void, Never>()
     
     private var authStateHandle: AuthStateDidChangeListenerHandle?
+    private var verificationRefreshTimer: Timer?
     
     init() {
-        userDataSubject = CurrentValueSubject(Auth.auth().currentUser != nil ? UserData(from: Auth.auth().currentUser!) : nil)
-        authStatusSubject = CurrentValueSubject(UserDataStore.getAuthStatus(user: userDataSubject.value))
-        didChange = userDataSubject.map({ _ in })
-            .merge(with: authStatusSubject.map({ _ in }))
-            .eraseToAnyPublisher()
-        _ = userDataSubject.print("userDataSubject")
-        _ = authStatusSubject.print("authStatusSubject")
-        
-        let authStatusFromUserDataPublisher = userDataSubject
-            .replaceError(with: nil)
-            .compactMap({ $0 == nil ? nil : UserDataStore.getAuthStatus(user: $0) })
-        _ = authStatusFromUserDataPublisher.subscribe(authStatusSubject)
-        
         authStateHandle = Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
             guard let strongSelf = self else { return }
-            strongSelf.userDataSubject.send(user == nil ? nil : UserData(from: user!))
+            strongSelf.userData = user != nil ? UserData(from: user!) : nil
         }
-        
-        let waitingForVerificationPublisher = authStatusSubject.removeDuplicates()
-            .filter({ $0 == .waitingForVerification })
-        _ = waitingForVerificationPublisher.print("waitingForVerificationPublisher")
-        
-        let pollWhileWaitingPublisher = waitingForVerificationPublisher
-            .zip(Timer.publish(every: 7.0, on: RunLoop.current, in: RunLoop.Mode.default))
-            .map({ _ -> AuthStatus in .waitingForVerification })
-        _ = pollWhileWaitingPublisher.print("pollWhileWaitingPublisher")
-        
-        let refreshVerifiedTokenPublisher = waitingForVerificationPublisher
-            .merge(with: pollWhileWaitingPublisher)
-            .flatMap { authStatus in
-                return Publishers.Future<User?, Never> { promise in
-                    if let user = Auth.auth().currentUser {
-                        user.reload() { error in
-                            if let user = Auth.auth().currentUser, error == nil && user.isEmailVerified {
-                                promise(.success(user))
-                            } else {
-                                // TODO handle error
-                                promise(.success(nil))
-                            }
+        if let authUser = Auth.auth().currentUser {
+            userData = UserData(from: authUser)
+        }
+    }
+    
+    func startPollingVerification() {
+        if verificationRefreshTimer != nil { return }
+        // https://stackoverflow.com/a/41341827
+        verificationRefreshTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) {timer in
+            if self.authStatus == .waitingForVerification {
+                if let authUser = Auth.auth().currentUser {
+                    authUser.reload() { error in
+                        if let authUser = Auth.auth().currentUser, error == nil && authUser.isEmailVerified {
+                            self.forceRefreshUser()
                         }
-                    } else {
-                        promise(.success(nil))
-                    }
-                }
-            }
-            .compactMap({ $0 })
-        _ = refreshVerifiedTokenPublisher.print("refreshVerifiedTokenPublisher")
-        
-        let loggedInPublisher = authStatusSubject.removeDuplicates()
-            .filter({ $0 == .loggedIn })
-        _ = loggedInPublisher.print("loggedInPublisher")
-        
-        let companyUserLoadedPublisher = refreshVerifiedTokenPublisher
-            .merge(with: loggedInPublisher.map({ _ in Auth.auth().currentUser! }))
-            .flatMap { user in
-                return Publishers.Future<DocumentSnapshot?, Never> { promise in
-                    user.getIDTokenForcingRefresh(true) { token, error in
-                        if let user = self.userData, error == nil {
-                            // load the companyUser details
-                            let companyUserRef = Firestore.firestore().collection("companyUsers").document(user.id)
-                            companyUserRef.getDocument { doc, error in
-                                // TODO handle error
-                                promise(.success(doc))
-                            }
-                        } else {
-                            // TODO handle error
-                            promise(.success(nil))
+                        if error != nil {
+                            print(error!)
                         }
                     }
                 }
+            } else {
+                self.stopPollingVerification()
             }
-        _ = companyUserLoadedPublisher.print("companyUserLoadedPublisher")
-        
-        let updateUserWithCompanyPublisher = companyUserLoadedPublisher
-            .compactMap { doc -> UserData? in
-                if let doc = doc, var user = self.userData {
-                    user.companyRef = doc.get("company") as! DocumentReference?
-                    user.myHobbyRefs = doc.get("hobbies") as! [DocumentReference]?
-                    return user
+        }
+    }
+    
+    func stopPollingVerification() {
+        if verificationRefreshTimer != nil {
+            verificationRefreshTimer?.invalidate()
+            verificationRefreshTimer = nil
+        }
+    }
+    
+    func forceRefreshUser() {
+        guard let authUser = Auth.auth().currentUser else { return }
+        authUser.getIDTokenForcingRefresh(true) { token, error in
+            if error == nil {
+                self.loadCompanyData()
+            } else {
+                print(error!)
+            }
+        }
+    }
+    
+    func loadCompanyData() {
+        if var userData = userData {
+            // load the companyUser details
+            let companyUserRef = Firestore.firestore().collection("companyUsers").document(userData.id)
+            companyUserRef.getDocument { doc, error in
+                if error != nil {
+                    print(error!)
                 }
-                return self.userData
+                if let doc = doc {
+                    userData.companyRef = doc.get("company") as! DocumentReference?
+                    userData.myHobbyRefs = doc.get("hobbies") as! [DocumentReference]?
+                    self.userData = userData
+                } else {
+                    print("Missing doc -- cannot set company details")
+                }
             }
-            .map({ u -> UserData? in u })
-        _ = updateUserWithCompanyPublisher.subscribe(userDataSubject)
+        } else {
+            print("Missing user data -- cannot load company details")
+        }
     }
     
     deinit {
         if let authStateHandle = authStateHandle {
             Auth.auth().removeStateDidChangeListener(authStateHandle)
         }
-        userDataSubject.send(completion: .finished)
     }
 }
