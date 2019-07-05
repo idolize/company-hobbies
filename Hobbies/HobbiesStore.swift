@@ -11,28 +11,46 @@ import Combine
 import Firebase
 
 class HobbiesStore : BindableObject {
+    static let `default` = HobbiesStore()
+    
     var db: Firestore
     
-    var hobbies: [Hobby] {
+    var hobbies: [Hobby] = [] {
         didSet { didChange.send() }
     }
     
-    init(hobbies: [Hobby] = []) {
-        self.hobbies = hobbies
+    init() {
         db = Firestore.firestore()
+        NotificationCenter.default.addObserver(self, selector: #selector(HobbiesStore.loadHobbies(notification:)), name: Notification.Name(rawValue: "software.idol.userDataStore.loggedInToCompany"), object: nil)
     }
 
     var didChange = PassthroughSubject<Void, Never>()
     
-    func loadUsers() {
-        db.collection("users").getDocuments() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
+    @objc func loadHobbies(notification: Notification) {
+        print("Loading hobbies")
+        if let userDataStore = notification.object as? UserDataStore, let userData = userDataStore.userData {
+            userData.companyRef!.collection("hobbies").getDocuments() { querySnapshot, err in
+                if let err = err {
+                    print("Error getting hobbies documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        print("\(document.documentID) => \(document.data())")
+                    }
+                     print("Loading hobbies success")
+                    self.hobbies = querySnapshot!.documents.map({ doc in
+                        return Hobby(
+                            id: doc.documentID,
+                            name: doc.get("name") as! String,
+                            description: doc.get("description") as! String,
+                            external: doc.get("external") as! [String: String]
+                        )
+                    })
                 }
             }
         }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }

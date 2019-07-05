@@ -12,8 +12,16 @@ struct HobbyList : View {
     @ObjectBinding var store: HobbiesStore
     
     var body: some View {
-        List(store.hobbies) { hobby in
-            HobbyCell(hobby: hobby)
+         ZStack {
+            if store.hobbies.isEmpty {
+                Text("Loading data...")
+            } else {
+                List(store.hobbies) { hobby in
+                    HobbyCell(hobby: hobby)
+                        .padding(.top)
+                        .padding(.bottom)
+                }
+            }
         }
     }
 }
@@ -24,14 +32,28 @@ struct HobbyCell : View {
     
     var body: some View {
         NavigationButton(destination: HobbyDetail(hobby: hobby)) {
-            Image(hobby.imageThumb)
-                .cornerRadius(10)
-            
-            VStack(alignment: .leading) {
-                Text(hobby.name)
-                Text("20 People")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+            VStack(alignment: .leading, spacing: 16.0) {
+                Image(hobby.image)
+                    .resizable()
+                    .renderingMode(.original)
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 300, height: 170)
+                    .cornerRadius(10)
+                    .shadow(radius: 10)
+                
+                VStack(alignment: .leading, spacing: 5.0) {
+                    Text(hobby.name)
+                        .color(.primary)
+                        .font(.headline)
+                    
+                    Text(hobby.description)
+                        .font(.subheadline)
+                        .color(.secondary)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(2)
+                        .frame(height: 40)
+                }
+                
             }
         }
     }
@@ -40,7 +62,7 @@ struct HobbyCell : View {
 #if DEBUG
 struct HobbyList_Previews : PreviewProvider {
     static var previews: some View {
-        HobbyList(store: HobbiesStore(hobbies: testData))
+        HobbyList(store: HobbiesStore())
     }
 }
 #endif

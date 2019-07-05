@@ -21,10 +21,15 @@ struct Onboarding : View {
             if createdButNotVerified == true {
                 VStack {
                     Text("You must verify your email address to continue")
+                        .lineLimit(2)
+                        .frame(height: 300)
                         .padding()
                     Button(action: resendVerificationEmail) {
                         Text("Resend email")
-                    }.padding()
+                    }
+                    Button(action: signOut) {
+                        Text("Sign out")
+                    }
                 }.padding()
             } else {
                 Form {
@@ -42,9 +47,6 @@ struct Onboarding : View {
                         Toggle(isOn: $isNewUser) {
                             Text("Don't have an account yet?")
                         }
-                    }
-                    
-                    Section {
                         Button(action: submit) {
                             Text(isNewUser ? "Sign up" : "Sign in")
                         }
@@ -53,11 +55,12 @@ struct Onboarding : View {
                     if error != nil {
                         Text(error!.localizedDescription)
                             .color(.red)
+                            .lineLimit(5)
                     }
                 }
             }
         }
-        .navigationBarTitle(Text("Log in to your account"))
+        .navigationBarTitle(Text("SIGN IN"))
     }
     
     private func onLogin(user: AuthDataResult?, error: Error?) {
@@ -68,8 +71,16 @@ struct Onboarding : View {
         Auth.auth().currentUser?.sendEmailVerification()
     }
     
+    func signOut() {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print("Sign out failed")
+        }
+    }
+    
     func submit() {
-        if (!email.hasSuffix("@snapchat.com") && !email.hasSuffix("@snap.com")) {
+        if (!email.hasSuffix("@snapchat.com") && !email.hasSuffix("@snap.com") && !email.hasSuffix("@gmail.com")) {
             error = RuntimeError("Email domain is not supported yet!")
             return
         }

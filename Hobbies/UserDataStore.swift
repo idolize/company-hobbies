@@ -56,10 +56,17 @@ final class UserDataStore : BindableObject {
     
     var userData: UserData? = nil {
         didSet {
-            if oldValue == nil && authStatus == .loggedIn {
-                loadCompanyData()
+            if authStatus == .loggedIn {
+                print("Auth status changed to logged in")
+                forceRefreshUser()
+            }
+            if authStatus == .loggedInToCompany && oldValue?.companyRef != userData?.companyRef {
+                print("Auth status changed -- logged into company!")
+                NotificationCenter.default.post(name:
+                    Notification.Name(rawValue: "software.idol.userDataStore.loggedInToCompany"), object: self)
             }
             if authStatus == .waitingForVerification {
+                print("Auth status changed -- waiting for verification")
                 startPollingVerification()
             } else {
                 stopPollingVerification()
@@ -88,14 +95,17 @@ final class UserDataStore : BindableObject {
     
     func startPollingVerification() {
         if verificationRefreshTimer != nil { return }
+        print("Start polling for verification")
         // https://stackoverflow.com/a/41341827
         verificationRefreshTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) {timer in
             if self.authStatus == .waitingForVerification {
                 if let authUser = Auth.auth().currentUser {
                     authUser.reload() { error in
                         if let authUser = Auth.auth().currentUser, error == nil && authUser.isEmailVerified {
+                            print("Poll result: VERIFIED!")
                             self.forceRefreshUser()
                         }
+                        print("Poll result: not verified yet...")
                         if error != nil {
                             print(error!)
                         }
@@ -109,14 +119,17 @@ final class UserDataStore : BindableObject {
     
     func stopPollingVerification() {
         if verificationRefreshTimer != nil {
+            print("Stop polling for verification")
             verificationRefreshTimer?.invalidate()
             verificationRefreshTimer = nil
         }
     }
     
     func forceRefreshUser() {
+        print("Force refresh user begin")
         guard let authUser = Auth.auth().currentUser else { return }
         authUser.getIDTokenForcingRefresh(true) { token, error in
+            print("Force refresh user success")
             if error == nil {
                 self.loadCompanyData()
             } else {

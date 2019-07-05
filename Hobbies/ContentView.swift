@@ -10,14 +10,14 @@ import SwiftUI
 
 struct ContentView : View {
     @EnvironmentObject var userDataStore: UserDataStore
-    @ObjectBinding var store: HobbiesStore
+    @EnvironmentObject var hobbiesStore: HobbiesStore
     @State var activeTab: Int = 0
     
     var body: some View {
         NavigationView {
             if userDataStore.userData != nil && userDataStore.userData!.isEmailVerified {
                 TabbedView(selection: $activeTab) {
-                    HobbyList(store: store)
+                    HobbyList(store: hobbiesStore)
                         .tabItemLabel(VStack {
                             Image("search")
                             Text("Explore")
@@ -32,7 +32,7 @@ struct ContentView : View {
                         })
                         .tag(1)
                 }
-                .navigationBarTitle(Text(activeTab == 0 ? "Hobbies" : "Profile"))
+                .navigationBarTitle(Text(activeTab == 0 ? "SNAP, INC." : "PROFILE"))
             } else {
                 Onboarding(createdButNotVerified: userDataStore.userData != nil)
             }
@@ -43,7 +43,7 @@ struct ContentView : View {
 #if DEBUG
 struct ContentView_Previews : PreviewProvider {
     static var previews: some View {
-        ContentView(store: HobbiesStore(hobbies: testData))
+        ContentView()
     }
 }
 #endif

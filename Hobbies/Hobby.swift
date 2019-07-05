@@ -9,15 +9,13 @@
 import SwiftUI
 
 struct Hobby : Identifiable {
-    var id = UUID()
+    var id = UUID().uuidString
     var name: String
+    var description: String = ""
+    var external: [String: String] = [:]
     
     var image: String {
         return name.lowercased().replacingOccurrences(of: " ", with: "")
-    }
-    
-    var imageThumb: String {
-        return image + "Thumb"
     }
 }
 

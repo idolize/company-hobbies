@@ -13,25 +13,51 @@ struct HobbyDetail : View {
     
     var body: some View {
         VStack {
-            Image(hobby.image)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(height: 200)
-                .clipped()
-                .listRowInsets(EdgeInsets())
+            ZStack(alignment: .bottom) {
+                Image(hobby.image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: nil, height: 275, alignment: .leading)
+                    .clipped()
+                
+                Rectangle()
+                    .foregroundColor(.black)
+                    .frame(height: 80)
+                    .opacity(0.35)
+                    .blur(radius: 10)
+                
+                HStack {
+                    VStack(alignment: .leading, spacing: 8.0) {
+                        Text("\(hobby.name) @ Snap, Inc.")
+                            .color(.white)
+                            .font(.largeTitle)
+                    }
+                    .padding(.leading)
+                    .padding(.bottom)
+                    
+                    Spacer()
+                }
+            }
+            .listRowInsets(EdgeInsets())
             
             VStack(alignment: HorizontalAlignment.leading) {
-                Text("\(hobby.name) @ Snap, Inc.")
-                    .font(.title)
-                    .padding(.bottom, 10)
                 
-                Text("Description...")
                 
+                Text(hobby.description)
+                    .font(Font.system(size: 22).italic())
+                    .padding(.bottom)
+                
+                HStack {
+                    Text("Contact:")
+                    Text("idol@snapchat.com")
+                        .color(.blue)
+                }
                 Divider()
-                
-                Text("Contact: idol@snapchat.com")
-                Divider()
-                Text("Slack: #\(hobby.image)")
+                HStack {
+                    Text("Slack:")
+                    Text(hobby.external["slack"] ?? "none")
+                        .color(.blue)
+                }
                 Divider()
                 Text(
                     """
@@ -41,13 +67,33 @@ struct HobbyDetail : View {
                     - userC
                     - userD
                     """
-                ).lineLimit(nil)
+                ).lineLimit(nil).lineSpacing(9.0)
             }
-                .padding()
+            .padding()
             
-            Spacer()
+            HStack {
+                Spacer()
+                JoinButton()
+                Spacer()
+            }
+            .padding(.top, 50)
+            
         }
-        .navigationBarTitle(Text(hobby.name), displayMode: .inline)
+        .edgesIgnoringSafeArea(.top)
+        .navigationBarHidden(true)
+    }
+}
+
+struct JoinButton : View {
+    var body: some View {
+        Button(action: {}) {
+            Text("Join Up!")
+        }
+        .frame(width: 210, height: 50)
+        .foregroundColor(.white)
+        .font(.headline)
+        .background(Color.blue)
+        .cornerRadius(10)
     }
 }
 
