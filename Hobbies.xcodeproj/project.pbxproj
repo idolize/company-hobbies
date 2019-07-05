@@ -91,11 +91,11 @@
 				D507FC0122C9601A008E2223 /* HobbyList.swift */,
 				D507FBFD22C86570008E2223 /* HobbyDetail.swift */,
 				D507FC0322C96176008E2223 /* Profile.swift */,
+				D58D36AF22C9CB5000D58094 /* Onboarding.swift */,
 				D58E152A22C8495900692981 /* Preview Content */,
 				D58E153622C84FB000692981 /* Hobby.swift */,
 				D507FBFF22C8678E008E2223 /* HobbiesStore.swift */,
 				D507FC0522C9AD13008E2223 /* UserDataStore.swift */,
-				D58D36AF22C9CB5000D58094 /* Onboarding.swift */,
 				D514ED3822CB1C3C00F9F323 /* RuntimeError.swift */,
 			);
 			path = Hobbies;

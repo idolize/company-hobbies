@@ -6,14 +6,16 @@
 //  Copyright © 2019 David Idol. All rights reserved.
 //
 
-struct RuntimeError : Error {
+import Foundation
+
+struct RuntimeError : Error, LocalizedError {
     let message: String
     
     init(_ message: String) {
         self.message = message
     }
     
-    public var localizedDescription: String {
-        return message
+    public var errorDescription: String? {
+        return NSLocalizedString(message, comment: "")
     }
 }

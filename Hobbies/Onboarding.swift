@@ -33,6 +33,12 @@ struct Onboarding : View {
                 }.padding()
             } else {
                 Form {
+                    if error != nil {
+                        Text(error!.localizedDescription)
+                            .color(.red)
+                            .lineLimit(5)
+                    }
+                    
                     Section(header: Text("Email")) {
                         TextField($email, placeholder: Text("user@company.com"))
                             .textContentType(.emailAddress)
@@ -50,12 +56,6 @@ struct Onboarding : View {
                         Button(action: submit) {
                             Text(isNewUser ? "Sign up" : "Sign in")
                         }
-                    }
-                    
-                    if error != nil {
-                        Text(error!.localizedDescription)
-                            .color(.red)
-                            .lineLimit(5)
                     }
                 }
             }
