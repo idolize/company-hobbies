@@ -13,13 +13,14 @@ struct Profile : View {
     @EnvironmentObject var userDataStore: UserDataStore
     
     var body: some View {
-        VStack(alignment: HorizontalAlignment.leading) {
+        VStack(alignment: HorizontalAlignment.leading, spacing: 15.0) {
             if userDataStore.userData != nil {
                 Text("Email: \(userDataStore.userData!.email)")
                 Text("Verified: \(userDataStore.userData!.isEmailVerified.description)")
-                Text("Name: \(userDataStore.userData!.name ?? "nil")")
-                Text("Photo URL: \(userDataStore.userData!.photoUrl?.absoluteString ?? "nil")")
-                Text("Company ref: \(userDataStore.userData!.companyRef?.documentID ?? "nil")")
+                Text("Name: \(userDataStore.userData!.name ?? "none")")
+                Text("Photo URL: \(userDataStore.userData!.photoUrl?.absoluteString ?? "none")")
+                Text("Company ref: \(userDataStore.userData!.companyRef?.documentID ?? "none")")
+                Text("Hobbies: \(userDataStore.userData!.myHobbyRefs.map({ ref in ref.documentID }).joined(separator: ", "))")
                 Button(action: signOut) {
                     Text("Sign out")
                 }
@@ -28,6 +29,7 @@ struct Profile : View {
             }
             Spacer()
         }
+        .padding(.top)
     }
     
     func signOut() {

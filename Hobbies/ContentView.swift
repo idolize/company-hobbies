@@ -17,7 +17,7 @@ struct ContentView : View {
         NavigationView {
             if userDataStore.userData != nil && userDataStore.userData!.isEmailVerified {
                 TabbedView(selection: $activeTab) {
-                    HobbyList(store: hobbiesStore)
+                    HobbyList(hobbiesStore: hobbiesStore)
                         .tabItemLabel(VStack {
                             Image("search")
                             Text("Explore")
@@ -33,6 +33,9 @@ struct ContentView : View {
                         .tag(1)
                 }
                 .navigationBarTitle(Text(activeTab == 0 ? "SNAP, INC." : "PROFILE"))
+                    .navigationBarItems(trailing: Button(action: {}) {
+                        Text("Hi")
+                    })
             } else {
                 Onboarding(createdButNotVerified: userDataStore.userData != nil)
             }

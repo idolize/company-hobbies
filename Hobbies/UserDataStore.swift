@@ -22,7 +22,11 @@ struct UserData : Identifiable {
     var name: String?
     var photoUrl: URL?
     var companyRef: DocumentReference?
-    var myHobbyRefs: [DocumentReference]?
+    var myHobbyRefs: [DocumentReference] = []
+    
+    var docRef: DocumentReference {
+        return Firestore.firestore().collection("companyUsers").document(id);
+    }
     
     init(id: String, email: String) {
         self.id = id
@@ -35,6 +39,10 @@ struct UserData : Identifiable {
         self.name = authUser.displayName
         self.photoUrl = authUser.photoURL
         self.isEmailVerified = authUser.isEmailVerified
+    }
+    
+    func isMemberOfHobby(hobbyId: String) -> Bool {
+        return myHobbyRefs.firstIndex(where: { $0.documentID == hobbyId }) != nil
     }
 }
 
@@ -93,7 +101,7 @@ final class UserDataStore : BindableObject {
         }
     }
     
-    func startPollingVerification() {
+    private func startPollingVerification() {
         if verificationRefreshTimer != nil { return }
         print("Start polling for verification")
         // https://stackoverflow.com/a/41341827
@@ -117,7 +125,7 @@ final class UserDataStore : BindableObject {
         }
     }
     
-    func stopPollingVerification() {
+    private func stopPollingVerification() {
         if verificationRefreshTimer != nil {
             print("Stop polling for verification")
             verificationRefreshTimer?.invalidate()
@@ -147,8 +155,8 @@ final class UserDataStore : BindableObject {
                     print(error!)
                 }
                 if let doc = doc {
-                    userData.companyRef = doc.get("company") as! DocumentReference?
-                    userData.myHobbyRefs = doc.get("hobbies") as! [DocumentReference]?
+                    userData.companyRef = doc.get("company") as? DocumentReference? ?? nil
+                    userData.myHobbyRefs = doc.get("hobbies") as? [DocumentReference] ?? []
                     self.userData = userData
                 } else {
                     print("Missing doc -- cannot set company details")
@@ -156,6 +164,38 @@ final class UserDataStore : BindableObject {
             }
         } else {
             print("Missing user data -- cannot load company details")
+        }
+    }
+    
+    func joinHobby(hobby: Hobby) {
+        if var userData = userData, !userData.isMemberOfHobby(hobbyId: hobby.id) {
+            print("Joining hobby")
+            userData.myHobbyRefs.append(hobby.docRef)
+            self.userData = userData
+            let fields = [ "hobbies": userData.myHobbyRefs ]
+            userData.docRef.updateData(fields as [AnyHashable : Any]) { error in
+                if error != nil {
+                    print(error!)
+                } else {
+                    print("Hobby joined")
+                }
+            }
+        }
+    }
+    
+    func leaveHobby(hobby: Hobby) {
+        if var userData = userData, let index = userData.myHobbyRefs.firstIndex(where: {$0.documentID == hobby.id}) {
+            print("Leaving hobby")
+            userData.myHobbyRefs.remove(at: index)
+            self.userData = userData
+            let fields = [ "hobbies": userData.myHobbyRefs ]
+            userData.docRef.updateData(fields as [AnyHashable : Any]) { error in
+                if error != nil {
+                    print(error!)
+                } else {
+                    print("Hobby left")
+                }
+            }
         }
     }
     

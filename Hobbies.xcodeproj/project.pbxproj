@@ -14,7 +14,10 @@
 		D507FC0422C96176008E2223 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D507FC0322C96176008E2223 /* Profile.swift */; };
 		D514ED3722C9DCD300F9F323 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D514ED3622C9DCD300F9F323 /* GoogleService-Info.plist */; };
 		D514ED3922CB1C3C00F9F323 /* RuntimeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D514ED3822CB1C3C00F9F323 /* RuntimeError.swift */; };
+		D545E60222D076450026EC2C /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D545E60122D076450026EC2C /* ImageCache.swift */; };
+		D545E60422D0792C0026EC2C /* GcsImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D545E60322D0792C0026EC2C /* GcsImage.swift */; };
 		D57AAC3022CDC32700642F3E /* UserDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D507FC0522C9AD13008E2223 /* UserDataStore.swift */; };
+		D580DDD222CF971600BF1928 /* HobbyDetailEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580DDD122CF971600BF1928 /* HobbyDetailEditor.swift */; };
 		D58D36B022C9CB5000D58094 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58D36AF22C9CB5000D58094 /* Onboarding.swift */; };
 		D58E152322C8495500692981 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58E152222C8495500692981 /* AppDelegate.swift */; };
 		D58E152522C8495500692981 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58E152422C8495500692981 /* SceneDelegate.swift */; };
@@ -35,6 +38,9 @@
 		D507FC0522C9AD13008E2223 /* UserDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataStore.swift; sourceTree = "<group>"; };
 		D514ED3622C9DCD300F9F323 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D514ED3822CB1C3C00F9F323 /* RuntimeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeError.swift; sourceTree = "<group>"; };
+		D545E60122D076450026EC2C /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		D545E60322D0792C0026EC2C /* GcsImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GcsImage.swift; sourceTree = "<group>"; };
+		D580DDD122CF971600BF1928 /* HobbyDetailEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbyDetailEditor.swift; sourceTree = "<group>"; };
 		D58D36AF22C9CB5000D58094 /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		D58E151F22C8495500692981 /* Hobbies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hobbies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58E152222C8495500692981 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -90,13 +96,16 @@
 				D58E152622C8495500692981 /* ContentView.swift */,
 				D507FC0122C9601A008E2223 /* HobbyList.swift */,
 				D507FBFD22C86570008E2223 /* HobbyDetail.swift */,
+				D580DDD122CF971600BF1928 /* HobbyDetailEditor.swift */,
 				D507FC0322C96176008E2223 /* Profile.swift */,
 				D58D36AF22C9CB5000D58094 /* Onboarding.swift */,
+				D545E60322D0792C0026EC2C /* GcsImage.swift */,
 				D58E152A22C8495900692981 /* Preview Content */,
 				D58E153622C84FB000692981 /* Hobby.swift */,
 				D507FBFF22C8678E008E2223 /* HobbiesStore.swift */,
 				D507FC0522C9AD13008E2223 /* UserDataStore.swift */,
 				D514ED3822CB1C3C00F9F323 /* RuntimeError.swift */,
+				D545E60122D076450026EC2C /* ImageCache.swift */,
 			);
 			path = Hobbies;
 			sourceTree = "<group>";
@@ -240,9 +249,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D58E152322C8495500692981 /* AppDelegate.swift in Sources */,
+				D545E60222D076450026EC2C /* ImageCache.swift in Sources */,
 				D57AAC3022CDC32700642F3E /* UserDataStore.swift in Sources */,
 				D507FC0422C96176008E2223 /* Profile.swift in Sources */,
 				D58D36B022C9CB5000D58094 /* Onboarding.swift in Sources */,
+				D580DDD222CF971600BF1928 /* HobbyDetailEditor.swift in Sources */,
 				D58E152522C8495500692981 /* SceneDelegate.swift in Sources */,
 				D514ED3922CB1C3C00F9F323 /* RuntimeError.swift in Sources */,
 				D507FC0222C9601A008E2223 /* HobbyList.swift in Sources */,
@@ -250,6 +261,7 @@
 				D507FBFE22C86570008E2223 /* HobbyDetail.swift in Sources */,
 				D507FC0022C8678E008E2223 /* HobbiesStore.swift in Sources */,
 				D58E152722C8495500692981 /* ContentView.swift in Sources */,
+				D545E60422D0792C0026EC2C /* GcsImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
