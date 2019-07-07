@@ -35,6 +35,10 @@ class HobbiesStore : BindableObject {
         }
     }
     
+    func setHobbyImage() {
+        
+    }
+    
     func updateHobby(hobby: Hobby) {
         if let index = hobbies.firstIndex(where: {$0.id == hobby.id}) {
             print("Optimistically updating hobby \(hobby.id)")
@@ -68,6 +72,7 @@ class HobbiesStore : BindableObject {
                             id: doc.documentID,
                             name: doc.get("name") as! String,
                             description: doc.get("description") as! String,
+                            template: doc.get("template") != nil ? Hobby.Template(rawValue: doc.get("template") as! String) : nil,
                             external: doc.get("external") as! [String: String],
                             companyId: userData.companyRef!.documentID
                         )

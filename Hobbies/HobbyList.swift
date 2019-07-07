@@ -50,17 +50,34 @@ struct HobbyList : View {
 
 struct HobbyCell : View {
     var hobby: Hobby
+    @ObjectBinding var cache: BindableImageCache
+    var placeholderImg: UIImage = UIImage(named: "spinner-third")!
+    
+    init(hobby: Hobby) {
+        self.hobby = hobby
+        cache = BindableImageCache(storagePath: "images/\(hobby.companyId)/hobbies/\(hobby.id).jpg")
+    }
     
     var body: some View {
         NavigationButton(destination: HobbyDetail(hobby: hobby)) {
-            VStack(alignment: .leading, spacing: 16.0) {
-                Image(hobby.image)
-                    .resizable()
-                    .renderingMode(.original)
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 300, height: 170)
-                    .cornerRadius(10)
-                    .shadow(radius: 10)
+            VStack(alignment: HorizontalAlignment.leading, spacing: 16.0) {
+                if hobby.image != nil {
+                    Image(hobby.image!)
+                        .resizable()
+                        .renderingMode(.original)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 300, height: 170)
+                        .cornerRadius(10)
+                        .shadow(radius: 10)
+                } else {
+                    Image(uiImage: cache.imageData ?? placeholderImg)
+                        .resizable()
+                        .renderingMode(.original)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 300, height: 170)
+                        .cornerRadius(10)
+                        .shadow(radius: 10)
+                }
                 
                 VStack(alignment: .leading, spacing: 5.0) {
                     Text(hobby.name)

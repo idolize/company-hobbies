@@ -16,6 +16,8 @@
 		D514ED3922CB1C3C00F9F323 /* RuntimeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D514ED3822CB1C3C00F9F323 /* RuntimeError.swift */; };
 		D545E60222D076450026EC2C /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D545E60122D076450026EC2C /* ImageCache.swift */; };
 		D545E60422D0792C0026EC2C /* GcsImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D545E60322D0792C0026EC2C /* GcsImage.swift */; };
+		D545E60622D1640E0026EC2C /* TemplateSelectorPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = D545E60522D1640E0026EC2C /* TemplateSelectorPopover.swift */; };
+		D545E60822D1C3EA0026EC2C /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D545E60722D1C3EA0026EC2C /* Utils.swift */; };
 		D57AAC3022CDC32700642F3E /* UserDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D507FC0522C9AD13008E2223 /* UserDataStore.swift */; };
 		D580DDD222CF971600BF1928 /* HobbyDetailEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580DDD122CF971600BF1928 /* HobbyDetailEditor.swift */; };
 		D58D36B022C9CB5000D58094 /* Onboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58D36AF22C9CB5000D58094 /* Onboarding.swift */; };
@@ -40,6 +42,8 @@
 		D514ED3822CB1C3C00F9F323 /* RuntimeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeError.swift; sourceTree = "<group>"; };
 		D545E60122D076450026EC2C /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		D545E60322D0792C0026EC2C /* GcsImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GcsImage.swift; sourceTree = "<group>"; };
+		D545E60522D1640E0026EC2C /* TemplateSelectorPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateSelectorPopover.swift; sourceTree = "<group>"; };
+		D545E60722D1C3EA0026EC2C /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		D580DDD122CF971600BF1928 /* HobbyDetailEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbyDetailEditor.swift; sourceTree = "<group>"; };
 		D58D36AF22C9CB5000D58094 /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		D58E151F22C8495500692981 /* Hobbies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hobbies.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,12 +104,14 @@
 				D507FC0322C96176008E2223 /* Profile.swift */,
 				D58D36AF22C9CB5000D58094 /* Onboarding.swift */,
 				D545E60322D0792C0026EC2C /* GcsImage.swift */,
+				D545E60522D1640E0026EC2C /* TemplateSelectorPopover.swift */,
 				D58E152A22C8495900692981 /* Preview Content */,
 				D58E153622C84FB000692981 /* Hobby.swift */,
 				D507FBFF22C8678E008E2223 /* HobbiesStore.swift */,
 				D507FC0522C9AD13008E2223 /* UserDataStore.swift */,
 				D514ED3822CB1C3C00F9F323 /* RuntimeError.swift */,
 				D545E60122D076450026EC2C /* ImageCache.swift */,
+				D545E60722D1C3EA0026EC2C /* Utils.swift */,
 			);
 			path = Hobbies;
 			sourceTree = "<group>";
@@ -254,6 +260,8 @@
 				D507FC0422C96176008E2223 /* Profile.swift in Sources */,
 				D58D36B022C9CB5000D58094 /* Onboarding.swift in Sources */,
 				D580DDD222CF971600BF1928 /* HobbyDetailEditor.swift in Sources */,
+				D545E60622D1640E0026EC2C /* TemplateSelectorPopover.swift in Sources */,
+				D545E60822D1C3EA0026EC2C /* Utils.swift in Sources */,
 				D58E152522C8495500692981 /* SceneDelegate.swift in Sources */,
 				D514ED3922CB1C3C00F9F323 /* RuntimeError.swift in Sources */,
 				D507FC0222C9601A008E2223 /* HobbyList.swift in Sources */,

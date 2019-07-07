@@ -9,12 +9,13 @@
 import SwiftUI
 
 struct HobbyDetail : View {
-    @Environment(\.editMode) var editMode
-    @EnvironmentObject var hobbiesStore: HobbiesStore
+    @Environment(\.editMode) private var editMode
+    @EnvironmentObject private var hobbiesStore: HobbiesStore
+    @State private var isActionSheetVisible = false
+    @State private var isPopoverVisible = false
     
     @ObjectBinding var cache: BindableImageCache
     var placeholderImg: UIImage = UIImage(named: "spinner-third")!
-    
     
     var hobby: Hobby
     @State var draftHobby: Hobby = Hobby(id: "", name: "", companyId: "")
@@ -24,14 +25,51 @@ struct HobbyDetail : View {
         cache = BindableImageCache(storagePath: "images/\(hobby.companyId)/hobbies/\(hobby.id).jpg")
     }
     
+    
+    private var actionSheet: ActionSheet? {
+        let removeBtn = ActionSheet.Button.destructive(Text("Remove Current Photo")) {
+            // TODO
+            self.isActionSheetVisible = false
+        }
+//        let chooseFromTemplateBtn = PresentationButton(destination: TemplateSelectorPopover()) {
+//            ActionSheet.Button.default(Text("Choose from Template")) {
+//                self.isActionSheetVisible = false
+//                self.isPopoverVisible = true
+//            }
+//        }
+        let chooseFromTemplateBtn = ActionSheet.Button.default(Text("Choose from Template")) {
+            self.isActionSheetVisible = false
+            self.isPopoverVisible = true
+        }
+        let chooseFromLibBtn = ActionSheet.Button.default(Text("Choose from Library")) {
+            self.isActionSheetVisible = false
+        }
+        let dismissBtn = ActionSheet.Button.cancel {
+            self.isActionSheetVisible = false
+        }
+        let buttons = [removeBtn, chooseFromTemplateBtn, chooseFromLibBtn, dismissBtn]
+        
+        return self.isActionSheetVisible ? ActionSheet(title: Text("Edit Photo"),
+                                                       buttons: buttons) : nil
+        
+    }
+    
     var body: some View {
         VStack {
             ZStack(alignment: .bottom) {
-                Image(uiImage: cache.imageData ?? placeholderImg)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: nil, height: 275, alignment: .topLeading)
-                    .clipped()
+                if draftHobby.image != nil {
+                    Image(draftHobby.image!)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: nil, height: 275, alignment: .topLeading)
+                        .clipped()
+                } else {
+                    Image(uiImage: cache.imageData ?? placeholderImg)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: nil, height: 275, alignment: .topLeading)
+                        .clipped()
+                }
                 
                 Rectangle()
                     .foregroundColor(.black)
@@ -50,6 +88,27 @@ struct HobbyDetail : View {
                     
                     Spacer()
                 }
+                
+                if self.editMode?.value != .inactive {
+                    VStack(alignment: .center) {
+                        Spacer()
+                        HStack(alignment: .center) {
+                            Button(action: {
+                                self.isActionSheetVisible = true
+                            }) {
+                                Image("edit")
+                                    .resizable()
+                                    .frame(width: 25, height: 25)
+                                    .padding(15)
+                                    .background(Color.black.opacity(0.35))
+                                    .mask(Circle())
+                            }
+                            .foregroundColor(.white)
+                            .presentation(self.actionSheet)
+                        }
+                        Spacer()
+                    }
+                }
             }
             .listRowInsets(EdgeInsets())
             
@@ -58,10 +117,11 @@ struct HobbyDetail : View {
                     .padding()
             } else {
                 HobbyDetailEditor(hobby: $draftHobby)
-                    .onDisappear {
-                        self.draftHobby = self.hobby
-                    }
-                    .padding()
+//                    .onDisappear {
+                        // TODO how to discard changes visually?
+//                        self.draftHobby = self.hobby
+//                    }
+                    .padding(.top)
             }
             
             HStack {
@@ -73,6 +133,10 @@ struct HobbyDetail : View {
             
             Spacer()
         }
+        .presentation(isPopoverVisible ? Popover(content: TemplateSelectorPopover(selected: { template in
+            self.draftHobby.template = template
+            self.isPopoverVisible.toggle()
+        }), dismissHandler: { self.isPopoverVisible.toggle() }) : nil)
         .edgesIgnoringSafeArea(.top)
         .navigationBarItems(trailing: EditButton())
         .onAppear(perform: { self.draftHobby = self.hobby })
@@ -103,6 +167,7 @@ struct HobbyDetailBody : View {
             }
             Divider()
             Text("Members: userA, userB, userC, userD, userE, userF").lineLimit(nil).lineSpacing(9.0)
+            
         }
     }
 }

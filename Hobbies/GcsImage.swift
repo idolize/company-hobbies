@@ -25,11 +25,28 @@ import Combine
 
 class BindableImageCache : BindableObject {
     let didChange = PassthroughSubject<UIImage?, Never>()
+    let storagePath: String
+    private var isFetching = false
     
-    var imageData: UIImage? = nil {
+    private var rawImageData: UIImage? = nil {
         didSet {
             didChange.send(imageData)
         }
+    }
+    
+    var imageData: UIImage? {
+        if rawImageData != nil {
+            return rawImageData
+        }
+        if !isFetching {
+            ImageCache.downloadImageFromStorage(storagePath: storagePath) { image, error in
+                // TODO cache error and show it in UI?
+                self.rawImageData = image
+                self.isFetching = false
+            }
+            isFetching = true
+        }
+        return nil
     }
     
     var isPending: Bool {
@@ -37,9 +54,6 @@ class BindableImageCache : BindableObject {
     }
     
     init(storagePath: String) {
-        ImageCache.downloadImageFromStorage(storagePath: storagePath) { image, error in
-            // TODO cache error and show it in UI?
-            self.imageData = image
-        }
+        self.storagePath = storagePath
     }
 }

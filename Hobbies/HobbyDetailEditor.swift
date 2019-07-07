@@ -23,7 +23,9 @@ struct HobbyDetailEditor : View {
                 Text("Description").bold()
                 Divider()
                 TextField($hobby.description)
+                    .lineLimit(2)
             }
+            
 
 //            HStack {
 //                Text("Slack").bold()

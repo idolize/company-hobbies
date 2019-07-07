@@ -13,6 +13,14 @@ struct ContentView : View {
     @EnvironmentObject var hobbiesStore: HobbiesStore
     @State var activeTab: Int = 0
     
+    var createButton: some View {
+        NavigationButton(destination: Profile()) {
+            // https://stackoverflow.com/questions/56606053/swiftui-navigationbutton-within-navigationbaritems
+//            DynamicNavigationDestinationLink()
+            Text("Create")
+        }
+    }
+    
     var body: some View {
         NavigationView {
             if userDataStore.userData != nil && userDataStore.userData!.isEmailVerified {
@@ -33,9 +41,7 @@ struct ContentView : View {
                         .tag(1)
                 }
                 .navigationBarTitle(Text(activeTab == 0 ? "SNAP, INC." : "PROFILE"))
-                    .navigationBarItems(trailing: Button(action: {}) {
-                        Text("Hi")
-                    })
+                .navigationBarItems(trailing: activeTab == 0 ? createButton : nil)
             } else {
                 Onboarding(createdButNotVerified: userDataStore.userData != nil)
             }

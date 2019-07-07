@@ -10,14 +10,23 @@ import SwiftUI
 import Firebase
 
 struct Hobby : Identifiable {
+    enum Template : String, CaseIterable, Hashable {
+        case cooking
+        case dancing
+        case drawing
+        case motorcycling
+        case martialArts
+    }
+    
     var id: String
     var name: String
     var description: String = ""
+    var template: Template?
     var external: [String: String] = [:]
     var companyId: String
     
-    var image: String {
-        return name.lowercased().replacingOccurrences(of: " ", with: "")
+    var image: String? {
+        return template?.rawValue
     }
     
     var docRef: DocumentReference {
@@ -28,7 +37,8 @@ struct Hobby : Identifiable {
         return [
             "name": name,
             "description": description,
-            "external": external
+            "external": external,
+            "template": template?.rawValue as Any
         ]
     }
 }
