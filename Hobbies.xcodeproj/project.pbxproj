@@ -3,11 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		4FEACA173750843B43C8D0CB /* libPods-Hobbies.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB0E5263AE0C132704B1EE7F /* libPods-Hobbies.a */; };
+		63582B8522D2A2B100F1671C /* HobbyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63582B8422D2A2B100F1671C /* HobbyCell.swift */; };
+		63582B8722D2A39900F1671C /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63582B8622D2A39900F1671C /* UserData.swift */; };
+		63582B8922D2AA8F00F1671C /* HobbyImageEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63582B8822D2AA8F00F1671C /* HobbyImageEditor.swift */; };
+		63582B8B22D2ABA800F1671C /* HobbyDetailBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63582B8A22D2ABA800F1671C /* HobbyDetailBody.swift */; };
 		D507FBFE22C86570008E2223 /* HobbyDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D507FBFD22C86570008E2223 /* HobbyDetail.swift */; };
 		D507FC0022C8678E008E2223 /* HobbiesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D507FBFF22C8678E008E2223 /* HobbiesStore.swift */; };
 		D507FC0222C9601A008E2223 /* HobbyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = D507FC0122C9601A008E2223 /* HobbyList.swift */; };
@@ -32,6 +36,10 @@
 
 /* Begin PBXFileReference section */
 		483B85715B21FD7EA8F4E912 /* Pods-Hobbies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hobbies.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Hobbies/Pods-Hobbies.debug.xcconfig"; sourceTree = "<group>"; };
+		63582B8422D2A2B100F1671C /* HobbyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbyCell.swift; sourceTree = "<group>"; };
+		63582B8622D2A39900F1671C /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		63582B8822D2AA8F00F1671C /* HobbyImageEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbyImageEditor.swift; sourceTree = "<group>"; };
+		63582B8A22D2ABA800F1671C /* HobbyDetailBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbyDetailBody.swift; sourceTree = "<group>"; };
 		CB0E5263AE0C132704B1EE7F /* libPods-Hobbies.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Hobbies.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D507FBFD22C86570008E2223 /* HobbyDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbyDetail.swift; sourceTree = "<group>"; };
 		D507FBFF22C8678E008E2223 /* HobbiesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbiesStore.swift; sourceTree = "<group>"; };
@@ -70,6 +78,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		63582B8222D29FFD00F1671C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D58E152622C8495500692981 /* ContentView.swift */,
+				D507FC0122C9601A008E2223 /* HobbyList.swift */,
+				63582B8422D2A2B100F1671C /* HobbyCell.swift */,
+				D507FBFD22C86570008E2223 /* HobbyDetail.swift */,
+				D580DDD122CF971600BF1928 /* HobbyDetailEditor.swift */,
+				63582B8A22D2ABA800F1671C /* HobbyDetailBody.swift */,
+				63582B8822D2AA8F00F1671C /* HobbyImageEditor.swift */,
+				D507FC0322C96176008E2223 /* Profile.swift */,
+				D58D36AF22C9CB5000D58094 /* Onboarding.swift */,
+				D545E60322D0792C0026EC2C /* GcsImage.swift */,
+				D545E60522D1640E0026EC2C /* TemplateSelectorPopover.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		63582B8322D2A01C00F1671C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D58E153622C84FB000692981 /* Hobby.swift */,
+				D507FBFF22C8678E008E2223 /* HobbiesStore.swift */,
+				63582B8622D2A39900F1671C /* UserData.swift */,
+				D507FC0522C9AD13008E2223 /* UserDataStore.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		D58E151622C8495500692981 = {
 			isa = PBXGroup;
 			children = (
@@ -96,22 +133,13 @@
 				D58E152D22C8495900692981 /* LaunchScreen.storyboard */,
 				D58E152222C8495500692981 /* AppDelegate.swift */,
 				D58E152422C8495500692981 /* SceneDelegate.swift */,
-				D58E152822C8495900692981 /* Assets.xcassets */,
-				D58E152622C8495500692981 /* ContentView.swift */,
-				D507FC0122C9601A008E2223 /* HobbyList.swift */,
-				D507FBFD22C86570008E2223 /* HobbyDetail.swift */,
-				D580DDD122CF971600BF1928 /* HobbyDetailEditor.swift */,
-				D507FC0322C96176008E2223 /* Profile.swift */,
-				D58D36AF22C9CB5000D58094 /* Onboarding.swift */,
-				D545E60322D0792C0026EC2C /* GcsImage.swift */,
-				D545E60522D1640E0026EC2C /* TemplateSelectorPopover.swift */,
-				D58E152A22C8495900692981 /* Preview Content */,
-				D58E153622C84FB000692981 /* Hobby.swift */,
-				D507FBFF22C8678E008E2223 /* HobbiesStore.swift */,
-				D507FC0522C9AD13008E2223 /* UserDataStore.swift */,
+				63582B8222D29FFD00F1671C /* Views */,
+				63582B8322D2A01C00F1671C /* Models */,
 				D514ED3822CB1C3C00F9F323 /* RuntimeError.swift */,
 				D545E60122D076450026EC2C /* ImageCache.swift */,
 				D545E60722D1C3EA0026EC2C /* Utils.swift */,
+				D58E152822C8495900692981 /* Assets.xcassets */,
+				D58E152A22C8495900692981 /* Preview Content */,
 			);
 			path = Hobbies;
 			sourceTree = "<group>";
@@ -216,17 +244,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Hobbies/Pods-Hobbies-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC-C++/gRPCCertificates-Cpp.bundle",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Hobbies/Pods-Hobbies-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates-Cpp.bundle",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Hobbies/Pods-Hobbies-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Hobbies/Pods-Hobbies-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Hobbies/Pods-Hobbies-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B2CDB6E980D1A9FC4CFE6EB5 /* [CP] Check Pods Manifest.lock */ = {
@@ -257,7 +284,9 @@
 				D58E152322C8495500692981 /* AppDelegate.swift in Sources */,
 				D545E60222D076450026EC2C /* ImageCache.swift in Sources */,
 				D57AAC3022CDC32700642F3E /* UserDataStore.swift in Sources */,
+				63582B8922D2AA8F00F1671C /* HobbyImageEditor.swift in Sources */,
 				D507FC0422C96176008E2223 /* Profile.swift in Sources */,
+				63582B8522D2A2B100F1671C /* HobbyCell.swift in Sources */,
 				D58D36B022C9CB5000D58094 /* Onboarding.swift in Sources */,
 				D580DDD222CF971600BF1928 /* HobbyDetailEditor.swift in Sources */,
 				D545E60622D1640E0026EC2C /* TemplateSelectorPopover.swift in Sources */,
@@ -265,6 +294,8 @@
 				D58E152522C8495500692981 /* SceneDelegate.swift in Sources */,
 				D514ED3922CB1C3C00F9F323 /* RuntimeError.swift in Sources */,
 				D507FC0222C9601A008E2223 /* HobbyList.swift in Sources */,
+				63582B8B22D2ABA800F1671C /* HobbyDetailBody.swift in Sources */,
+				63582B8722D2A39900F1671C /* UserData.swift in Sources */,
 				D58E153722C84FB000692981 /* Hobby.swift in Sources */,
 				D507FBFE22C86570008E2223 /* HobbyDetail.swift in Sources */,
 				D507FC0022C8678E008E2223 /* HobbiesStore.swift in Sources */,

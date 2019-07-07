@@ -10,40 +10,12 @@ import Firebase
 import Combine
 import SwiftUI
 
-enum AuthStatus {
-    case notLoggedIn, waitingForVerification, loggedIn, loggedInToCompany
+extension Notification.Name {
+    static let hobbyUserLoggedInToCompany: NSNotification.Name = Notification.Name(rawValue: "software.idol.userDataStore.loggedInToCompany")
 }
 
-struct UserData : Identifiable {
-    let id: String
-    let email: String
-    
-    var isEmailVerified: Bool = false
-    var name: String?
-    var photoUrl: URL?
-    var companyRef: DocumentReference?
-    var myHobbyRefs: [DocumentReference] = []
-    
-    var docRef: DocumentReference {
-        return Firestore.firestore().collection("companyUsers").document(id);
-    }
-    
-    init(id: String, email: String) {
-        self.id = id
-        self.email = email
-    }
-    
-    init(from authUser: User) {
-        self.id = authUser.uid
-        self.email = authUser.email ?? ""
-        self.name = authUser.displayName
-        self.photoUrl = authUser.photoURL
-        self.isEmailVerified = authUser.isEmailVerified
-    }
-    
-    func isMemberOfHobby(hobbyId: String) -> Bool {
-        return myHobbyRefs.firstIndex(where: { $0.documentID == hobbyId }) != nil
-    }
+enum AuthStatus {
+    case notLoggedIn, waitingForVerification, loggedIn, loggedInToCompany
 }
 
 // TODO move all of this to something more sane - like the new Combine framework!!
@@ -70,8 +42,7 @@ final class UserDataStore : BindableObject {
             }
             if authStatus == .loggedInToCompany && oldValue?.companyRef != userData?.companyRef {
                 print("Auth status changed -- logged into company!")
-                NotificationCenter.default.post(name:
-                    Notification.Name(rawValue: "software.idol.userDataStore.loggedInToCompany"), object: self)
+                NotificationCenter.default.post(name: Notification.Name.hobbyUserLoggedInToCompany, object: self)
             }
             if authStatus == .waitingForVerification {
                 print("Auth status changed -- waiting for verification")

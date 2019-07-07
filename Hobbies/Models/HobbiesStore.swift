@@ -13,17 +13,14 @@ import Firebase
 class HobbiesStore : BindableObject {
     static let `default` = HobbiesStore()
     
-    var db: Firestore
-    
     var hobbies: [Hobby] = [] {
         didSet { didChange.send() }
     }
     
     init() {
-        db = Firestore.firestore()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(HobbiesStore.handleLoggedInToCompany(notification:)),
-                                               name: Notification.Name(rawValue: "software.idol.userDataStore.loggedInToCompany"),
+                                               name: Notification.Name.hobbyUserLoggedInToCompany,
                                                object: nil)
     }
 
@@ -46,8 +43,7 @@ class HobbiesStore : BindableObject {
             didChange.send()
         }
         print("Saving updated hobby \(hobby.id) to server", hobby.documentData)
-        let docRef = db.collection("companies").document(hobby.companyId).collection("hobbies").document(hobby.id)
-        docRef.setData(hobby.documentData) { err in
+        hobby.docRef.setData(hobby.documentData) { err in
             if err != nil {
                 print("Error updating hobby \(hobby.id)")
             } else {
@@ -68,14 +64,7 @@ class HobbiesStore : BindableObject {
                     }
                     print("Loading hobbies success")
                     self.hobbies = querySnapshot!.documents.map({ doc in
-                        return Hobby(
-                            id: doc.documentID,
-                            name: doc.get("name") as! String,
-                            description: doc.get("description") as! String,
-                            template: doc.get("template") != nil ? Hobby.Template(rawValue: doc.get("template") as! String) : nil,
-                            external: doc.get("external") as! [String: String],
-                            companyId: userData.companyRef!.documentID
-                        )
+                        return Hobby(from: doc, companyId: userData.companyRef!.documentID)
                     })
                     .sorted(by: {one, two in one.name < two.name })
                 }
