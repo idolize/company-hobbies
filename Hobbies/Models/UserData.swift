@@ -17,6 +17,7 @@ struct UserData : Identifiable {
     var name: String?
     var photoUrl: URL?
     var companyRef: DocumentReference?
+    var userDetailsFetchStatus: FetchStatus = FetchStatus.notFetched
     var myHobbyRefs: [DocumentReference] = []
     
     var docRef: DocumentReference {

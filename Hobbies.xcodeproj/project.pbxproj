@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4FEACA173750843B43C8D0CB /* libPods-Hobbies.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB0E5263AE0C132704B1EE7F /* libPods-Hobbies.a */; };
+		6348CD9722D2EFC300C5E9AE /* FetchStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348CD9622D2EFC300C5E9AE /* FetchStatus.swift */; };
+		6348CD9922D2F1A200C5E9AE /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6348CD9822D2F1A200C5E9AE /* FirestoreManager.swift */; };
 		63582B8522D2A2B100F1671C /* HobbyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63582B8422D2A2B100F1671C /* HobbyCell.swift */; };
 		63582B8722D2A39900F1671C /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63582B8622D2A39900F1671C /* UserData.swift */; };
 		63582B8922D2AA8F00F1671C /* HobbyImageEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63582B8822D2AA8F00F1671C /* HobbyImageEditor.swift */; };
@@ -36,6 +38,8 @@
 
 /* Begin PBXFileReference section */
 		483B85715B21FD7EA8F4E912 /* Pods-Hobbies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hobbies.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Hobbies/Pods-Hobbies.debug.xcconfig"; sourceTree = "<group>"; };
+		6348CD9622D2EFC300C5E9AE /* FetchStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStatus.swift; sourceTree = "<group>"; };
+		6348CD9822D2F1A200C5E9AE /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		63582B8422D2A2B100F1671C /* HobbyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbyCell.swift; sourceTree = "<group>"; };
 		63582B8622D2A39900F1671C /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		63582B8822D2AA8F00F1671C /* HobbyImageEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HobbyImageEditor.swift; sourceTree = "<group>"; };
@@ -103,6 +107,8 @@
 				D507FBFF22C8678E008E2223 /* HobbiesStore.swift */,
 				63582B8622D2A39900F1671C /* UserData.swift */,
 				D507FC0522C9AD13008E2223 /* UserDataStore.swift */,
+				6348CD9622D2EFC300C5E9AE /* FetchStatus.swift */,
+				6348CD9822D2F1A200C5E9AE /* FirestoreManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -289,6 +295,7 @@
 				63582B8522D2A2B100F1671C /* HobbyCell.swift in Sources */,
 				D58D36B022C9CB5000D58094 /* Onboarding.swift in Sources */,
 				D580DDD222CF971600BF1928 /* HobbyDetailEditor.swift in Sources */,
+				6348CD9722D2EFC300C5E9AE /* FetchStatus.swift in Sources */,
 				D545E60622D1640E0026EC2C /* TemplateSelectorPopover.swift in Sources */,
 				D545E60822D1C3EA0026EC2C /* Utils.swift in Sources */,
 				D58E152522C8495500692981 /* SceneDelegate.swift in Sources */,
@@ -301,6 +308,7 @@
 				D507FC0022C8678E008E2223 /* HobbiesStore.swift in Sources */,
 				D58E152722C8495500692981 /* ContentView.swift in Sources */,
 				D545E60422D0792C0026EC2C /* GcsImage.swift in Sources */,
+				6348CD9922D2F1A200C5E9AE /* FirestoreManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
