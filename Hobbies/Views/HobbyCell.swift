@@ -10,7 +10,7 @@ import SwiftUI
 
 struct HobbyCell : View {
     var hobby: Hobby
-    @ObjectBinding var cache: BindableImageCache
+    @ObservedObject var cache: BindableImageCache
     var placeholderImg: UIImage = UIImage(named: "spinner-third")!
     
     init(hobby: Hobby) {
@@ -25,7 +25,7 @@ struct HobbyCell : View {
     }
     
     var body: some View {
-        NavigationButton(destination: HobbyDetail(hobby: hobby)) {
+        NavigationLink(destination: HobbyDetail(hobby: hobby)) {
             VStack(alignment: HorizontalAlignment.leading, spacing: 16.0) {
                 hobbyImage
                         .resizable()
@@ -37,12 +37,12 @@ struct HobbyCell : View {
                 
                 VStack(alignment: .leading, spacing: 5.0) {
                     Text(hobby.name)
-                        .color(.primary)
+                        .foregroundColor(.primary)
                         .font(.headline)
                     
                     Text(hobby.description)
                         .font(.subheadline)
-                        .color(.secondary)
+                        .foregroundColor(.secondary)
                         .multilineTextAlignment(.leading)
                         .lineLimit(2)
                         .frame(height: 40)

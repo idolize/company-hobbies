@@ -14,26 +14,26 @@ struct HobbyDetailBody : View {
     
     var body: some View {
         VStack(alignment: HorizontalAlignment.leading) {
-            Text(hobby.description)
+            Text(verbatim: hobby.description)
                 .font(Font.system(size: 22).italic())
                 .multilineTextAlignment(.leading)
-                .lineLimit(3)
                 .padding(.bottom)
+                .lineLimit(3)
             
             HStack {
                 Text("Contact:")
                 Text("idol@snapchat.com")
-                    .color(.blue)
+                    .foregroundColor(.blue)
             }
             Divider()
             HStack {
                 Text("Slack:")
                 Text(hobby.external["slack"] ?? "none")
-                    .color(.blue)
+                    .foregroundColor(.blue)
             }
             Divider()
-            Text("Members: userA, userB, userC, userD, userE, userF").lineLimit(nil).lineSpacing(9.0)
-            
+            Text("Members: userA, userB, userC, userD, userE, userF").lineLimit(nil).lineSpacing(CGFloat(9.0))
+            Spacer()
         }
     }
 }

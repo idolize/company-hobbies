@@ -23,16 +23,11 @@ import Combine
 
 
 
-class BindableImageCache : BindableObject {
-    let didChange = PassthroughSubject<UIImage?, Never>()
+class BindableImageCache : ObservableObject {
     let storagePath: String
     private var isFetching = false
     
-    private var rawImageData: UIImage? = nil {
-        didSet {
-            didChange.send(imageData)
-        }
-    }
+    @Published private var rawImageData: UIImage? = nil
     
     var imageData: UIImage? {
         if rawImageData != nil {

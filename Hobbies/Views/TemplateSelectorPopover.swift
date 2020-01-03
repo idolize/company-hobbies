@@ -14,9 +14,11 @@ struct TemplateSelectorPopover : View {
     var selected: (_ template: Hobby.Template) -> Void
     
     var body: some View {
-        List(templates.identified(by: \.self)) { template in
+        List(templates, id: \.self) { template in
             TemplateItem(template: template)
-                .tapAction({ self.selected(template) })
+                .onTapGesture {
+                    self.selected(template)
+                }
         }
     }
 }

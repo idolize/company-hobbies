@@ -14,7 +14,7 @@ struct ContentView : View {
     @State var activeTab: Int = 0
     
     var createButton: some View {
-        NavigationButton(destination: Profile()) {
+        NavigationLink(destination: Profile()) {
             // https://stackoverflow.com/questions/56606053/swiftui-navigationbutton-within-navigationbaritems
 //            DynamicNavigationDestinationLink()
             Text("Create")
@@ -24,20 +24,21 @@ struct ContentView : View {
     var body: some View {
         NavigationView {
             if userDataStore.userData != nil && userDataStore.userData!.isEmailVerified {
-                TabbedView(selection: $activeTab) {
+                TabView(selection: $activeTab) {
                     HobbyList(hobbiesStore: hobbiesStore)
-                        .tabItemLabel(VStack {
-                            Image("search")
+                        .tabItem {
+                            Image(systemName: "magnifyingglass")
+                                .foregroundColor(.white)
                             Text("Explore")
-                        })
+                        }
                         .tag(0)
                 
                 
                     Profile()
-                        .tabItemLabel(VStack {
-                            Image("user")
+                        .tabItem {
+                            Image(systemName: "person.fill")
                             Text("Profile")
-                        })
+                        }
                         .tag(1)
                 }
                 .navigationBarTitle(Text(activeTab == 0 ? "SNAP, INC." : "PROFILE"))

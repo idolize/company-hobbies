@@ -10,7 +10,7 @@ import SwiftUI
 
 struct HobbyList : View {
     @EnvironmentObject var userDataStore: UserDataStore
-    @ObjectBinding var hobbiesStore: HobbiesStore
+    @ObservedObject var hobbiesStore: HobbiesStore
     
     var body: some View {
          ZStack {

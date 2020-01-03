@@ -20,7 +20,7 @@ enum AuthStatus {
 
 // TODO move all of this to something more sane - like the new Combine framework!!
 // see the "use-combine" branch for a first attempt at such a migration
-final class UserDataStore : BindableObject {
+final class UserDataStore : ObservableObject {
     static let `default` = UserDataStore()
     
     static func getAuthStatus(user: UserData?) -> AuthStatus {

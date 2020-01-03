@@ -10,12 +10,10 @@ import SwiftUI
 import Combine
 import Firebase
 
-class HobbiesStore : BindableObject {
+class HobbiesStore : ObservableObject {
     static let `default` = HobbiesStore()
     
-    var hobbies: [Hobby] = [] {
-        didSet { didChange.send() }
-    }
+    @Published var hobbies: [Hobby] = []
     
     init() {
         NotificationCenter.default.addObserver(self,
@@ -23,8 +21,6 @@ class HobbiesStore : BindableObject {
                                                name: Notification.Name.hobbyUserLoggedInToCompany,
                                                object: nil)
     }
-
-    var didChange = PassthroughSubject<Void, Never>()
     
     @objc private func handleLoggedInToCompany(notification: Notification) {
         if let userDataStore = notification.object as? UserDataStore {
@@ -40,7 +36,6 @@ class HobbiesStore : BindableObject {
         if let index = hobbies.firstIndex(where: {$0.id == hobby.id}) {
             print("Optimistically updating hobby \(hobby.id)")
             hobbies[index] = hobby
-            didChange.send()
         }
         print("Saving updated hobby \(hobby.id) to server", hobby.documentData)
         hobby.docRef.setData(hobby.documentData) { err in

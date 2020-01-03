@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -11372,11 +11372,12 @@
 				LastUpgradeCheck = 1100;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
 			productRefGroup = 26A83E5EA1E721517473D6D83796F75B /* Products */;
@@ -13276,12 +13277,13 @@
 			};
 			name = Release;
 		};
-		4A94A0A720144BD82C6041CCBB073791 /* Release */ = {
+		2FEE8ED34BD033BD0D53629CBFAEE747 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BE7D86F208387448446D1815F32F487B /* gRPC-C++.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/gRPC-C++";
+				IBSC_MODULE = grpcpp;
 				INFOPLIST_FILE = "Target Support Files/gRPC-C++/ResourceBundle-gRPCCertificates-Cpp-gRPC-C++-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "gRPCCertificates-Cpp";
@@ -13558,6 +13560,23 @@
 			};
 			name = Debug;
 		};
+		8FE0082F2F930AAE4104540F170FCD58 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE7D86F208387448446D1815F32F487B /* gRPC-C++.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/gRPC-C++";
+				IBSC_MODULE = grpcpp;
+				INFOPLIST_FILE = "Target Support Files/gRPC-C++/ResourceBundle-gRPCCertificates-Cpp-gRPC-C++-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "gRPCCertificates-Cpp";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
 		93608575C1AB43D460DBCD290FFBD91C /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2B987F465326942C023D984B6E2A5CEC /* FirebaseAuth.xcconfig */;
@@ -13623,22 +13642,6 @@
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
-		};
-		B54AFD85E0C1DEB4C34EDEA412AE7922 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = BE7D86F208387448446D1815F32F487B /* gRPC-C++.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/gRPC-C++";
-				INFOPLIST_FILE = "Target Support Files/gRPC-C++/ResourceBundle-gRPCCertificates-Cpp-gRPC-C++-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = "gRPCCertificates-Cpp";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
 		};
 		B893DF101A7A6779AAF385FE008EDFD3 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -14140,8 +14143,8 @@
 		8D225B5744CB0D235CE8D209764D5ACD /* Build configuration list for PBXNativeTarget "gRPC-C++-gRPCCertificates-Cpp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B54AFD85E0C1DEB4C34EDEA412AE7922 /* Debug */,
-				4A94A0A720144BD82C6041CCBB073791 /* Release */,
+				8FE0082F2F930AAE4104540F170FCD58 /* Debug */,
+				2FEE8ED34BD033BD0D53629CBFAEE747 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

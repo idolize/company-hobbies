@@ -16,13 +16,13 @@ struct HobbyDetailEditor : View {
             HStack {
                 Text("Name").bold()
                 Divider()
-                TextField($hobby.name)
+                TextField("Name", text: $hobby.name)
             }
 
             HStack {
                 Text("Description").bold()
                 Divider()
-                TextField($hobby.description)
+                TextField("Description", text: $hobby.description)
                     .lineLimit(2)
             }
             

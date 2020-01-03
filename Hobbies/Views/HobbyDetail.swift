@@ -11,7 +11,7 @@ import SwiftUI
 struct HobbyDetail : View {
     @Environment(\.editMode) private var editMode
     @EnvironmentObject private var hobbiesStore: HobbiesStore
-    @ObjectBinding private var cache: BindableImageCache
+    @ObservedObject private var cache: BindableImageCache
     
     var hobby: Hobby
     @State var draftHobby: Hobby = Hobby(id: "", name: "", companyId: "")
@@ -25,7 +25,7 @@ struct HobbyDetail : View {
         VStack {
             HobbyImageHeader(cache: cache, draftHobby: $draftHobby)
             
-            if self.editMode?.value == .inactive {
+            if self.editMode?.wrappedValue == .inactive {
                 HobbyDetailBody(hobby: draftHobby)
                     .padding()
             } else {
@@ -46,8 +46,8 @@ struct HobbyDetail : View {
             
             Spacer()
         }
-        .edgesIgnoringSafeArea(.top)
         .navigationBarItems(trailing: EditButton())
+        .edgesIgnoringSafeArea(.top)
         .onAppear(perform: { self.draftHobby = self.hobby })
     }
 }
@@ -69,7 +69,7 @@ struct HobbyImageHeader : View {
             hobbyImage
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: nil, height: 275, alignment: .topLeading)
+//                .frame(width: nil, height: 275, alignment: .top)
                 .clipped()
             
             Rectangle()
@@ -81,7 +81,7 @@ struct HobbyImageHeader : View {
             HStack {
                 VStack(alignment: .leading, spacing: 8.0) {
                     Text("\(draftHobby.name) @ Snap, Inc.")
-                        .color(.white)
+                        .foregroundColor(.white)
                         .font(.largeTitle)
                     }
                     .padding(.leading)
@@ -92,6 +92,7 @@ struct HobbyImageHeader : View {
             
             HobbyImageEditor(templateSelected: { template in self.draftHobby.template = template })
         }
+        .frame(height: 275)
         .listRowInsets(EdgeInsets())
     }
 }
@@ -107,7 +108,7 @@ struct ActionButton : View {
     }
     
     var isEditing: Bool {
-        return editMode?.value != .inactive
+        return editMode?.wrappedValue != .inactive
     }
     
     var body: some View {
@@ -125,7 +126,7 @@ struct ActionButton : View {
     func performAction() {
         if isEditing {
             hobbiesStore.updateHobby(hobby: hobby)
-            self.editMode?.animation().value = .inactive
+            self.editMode?.animation().wrappedValue = .inactive
         } else if isMemberOfHobby {
             userDataStore.leaveHobby(hobby: hobby)
         } else {

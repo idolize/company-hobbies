@@ -64,17 +64,17 @@ struct LogInOrSignUpForm : View {
         Form {
             if error != nil {
                 Text(error!.localizedDescription)
-                    .color(.red)
+                    .foregroundColor(.red)
                     .lineLimit(5)
             }
             
             Section(header: Text("Email")) {
-                TextField($email, placeholder: Text("user@company.com"))
+                TextField("user@company.com", text: $email)
                     .textContentType(.emailAddress)
             }
             
             Section(header: Text("Password")) {
-                SecureField($password, placeholder: Text("password"))
+                SecureField("password", text: $password)
                     .textContentType(.password)
             }
             

@@ -15,7 +15,7 @@ struct HobbyImageEditor : View {
     
     let templateSelected: (_ template: Hobby.Template) -> Void
     
-    private var actionSheet: ActionSheet? {
+    private var actionSheet: ActionSheet {
         let removeBtn = ActionSheet.Button.destructive(Text("Remove Current Photo")) {
             // TODO set template to nil and also delete image from GCS?
             self.isActionSheetVisible = false
@@ -32,46 +32,40 @@ struct HobbyImageEditor : View {
         }
         let buttons = [removeBtn, chooseFromTemplateBtn, chooseFromLibBtn, dismissBtn]
         
-        return self.isActionSheetVisible ? ActionSheet(title: Text("Edit Photo"),
-                                                       buttons: buttons) : nil
-        
+        return ActionSheet(title: Text("Edit Photo"), buttons: buttons)
     }
     
-    private var popover: Popover? {
-        return !isPopoverVisible ? nil :
-            Popover(
-                content:
-                    TemplateSelectorPopover(selected: { template in
-                        self.templateSelected(template)
-                        self.isPopoverVisible.toggle()
-                    }
-                ),
-                dismissHandler: { self.isPopoverVisible.toggle() }
-            )
+    private var popover: TemplateSelectorPopover {
+        return TemplateSelectorPopover(selected: { template in
+            self.templateSelected(template)
+            self.isPopoverVisible.toggle()
+        })
     }
     
     var body: some View {
-        VStack(alignment: .center) {
+        VStack {
             Spacer()
-            HStack(alignment: .center) {
-                if self.editMode?.value != .inactive {
-                    Button(action: {
-                        self.isActionSheetVisible = true
-                    }) {
-                        Image("edit")
-                            .resizable()
-                            .frame(width: 25, height: 25)
-                            .padding(15)
-                            .background(Color.black.opacity(0.35))
-                            .mask(Circle())
-                    }
-                    .foregroundColor(.white)
-                    .presentation(self.actionSheet)
+            if self.editMode?.wrappedValue != .inactive {
+                Button(action: {
+                    self.isActionSheetVisible = true
+                }) {
+                    Image("edit")
+                        .resizable()
+                        .frame(width: 25, height: 25)
+                        .padding(15)
+                        .background(Color.black.opacity(0.35))
+                        .mask(Circle())
                 }
+                .foregroundColor(.white)
             }
             Spacer()
         }
-        .presentation(popover)
+        .actionSheet(isPresented: $isActionSheetVisible, content: {
+            self.actionSheet
+        })
+        .popover(isPresented: $isPopoverVisible, content: {
+            self.popover
+        })
     }
 }
 
